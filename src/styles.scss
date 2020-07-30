@@ -1,3 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 $fa-font-path: '../node_modules/font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome';
+
+.form-group.description-wrap,.form-group.className-wrap,.form-group.name-wrap,.form-group.access-wrap,.form-group.other-wrap{
+    display:none !important;
+}
