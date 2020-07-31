@@ -463,7 +463,8 @@ const FormBuilder = (opts, element) => {
             'className',
             'name',
             'access',
-            'value'
+            'value',
+            'labelInline'
         ];
         let noValFields = [
             'header',
@@ -582,6 +583,9 @@ const FormBuilder = (opts, element) => {
                 };
 
                 return boolAttribute('inline', values, labels);
+            },
+            labelInline:()=>{
+                boolAttribute('labelInline', values, { first: i18n.labelInline })
             },
             label: () => textAttribute('label', values),
             description: () => textAttribute('description', values),

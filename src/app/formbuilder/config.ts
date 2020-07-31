@@ -189,6 +189,7 @@ export const defaultI18n = {
           text: 'Text Field',
           textArea: 'Text Area',
           toggle: 'Toggle',
+          labelInline:'Label Inline',
           warning: 'Warning!',
           value: 'Value',
           viewJSON: '{  }',

@@ -1,7 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
-$fa-font-path: '../node_modules/font-awesome/fonts';
-@import '~font-awesome/scss/font-awesome';
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 
-.form-group.description-wrap,.form-group.className-wrap,.form-group.name-wrap,.form-group.access-wrap,.form-group.other-wrap{
-    display:none !important;
+.form-group.description-wrap,
+.form-group.className-wrap,
+.form-group.name-wrap,
+.form-group.access-wrap,
+.form-group.other-wrap {
+    display: none !important;
+}
+.form-wrap.form-builder .frmb {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.form-wrap.form-builder .frmb li {
+    flex: 0 50%;
+    display: flex;
+}
+.form-wrap.form-builder .frmb .field-label {
+    flex: 0 35%;
+}
+.form-wrap.form-builder .frmb-control li{
+    text-transform: capitalize;
 }
