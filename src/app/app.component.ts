@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { config, defaultI18n, defaultOptions } from "./formbuilder/config";
 import { FormBuilderCreateor } from "./formbuilder/form-builder";
 import I18N from "./formbuilder/mi18n";
+import { UtilityService } from './services/utility.service';
 
 declare var jQuery;
 
@@ -12,7 +13,7 @@ function initJq() {
         options = {};
       }
       let elems = this;
-      let {i18n, ...opts} = $.extend({}, defaultOptions, options, true);
+      let { i18n, ...opts } = $.extend({}, defaultOptions, options, true);
       (<any>config).opts = opts;
       let i18nOpts = $.extend({}, defaultI18n, i18n, true);
       let instance = {
@@ -53,16 +54,20 @@ function initJq() {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'FormBuilder';
   @ViewChild('json') jsonElement?: ElementRef;
-  public form: Object = { components: [] };  
+  public form: Object = {
+    components: []
+  };
+  public options: Object;
   formBuilder: any;
-
+  constructor(private utility: UtilityService) {
+    this.options = utility.getOptions();
+  }
   ngOnInit(): void {
     initJq();
     this.formBuilder = (<any>jQuery('.build-wrap')).formBuilder();
-    console.log(this.formBuilder);
   }
 
 }

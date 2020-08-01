@@ -28,15 +28,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/sass/form-builder.scss",
-              "src/assets/sass/form-render.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/formeo/dist/formeo.min.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/jquery-ui-sortable/jquery-ui.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/formeo/dist/formeo.min.js"
             ]
           },
           "configurations": {
