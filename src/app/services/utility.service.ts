@@ -11,7 +11,7 @@ export class UtilityService {
   editControlsHiddenTabs: string[] = ['api', 'conditional', 'logic', 'layout', 'data', 'validation'];
   editControlsHiddenItems: string[] = ['description', 'tooltip', 'customClass', 'tabindex', 'inline', 'hidden',
     'hideLabel', 'autofocus', 'disabled', 'tableView', 'modalEdit', 'prefix', 'suffix', 'widget.type', 'inputMask',
-    'allowMultipleMasks', 'showWordCount', 'showCharCount', 'spellcheck', 'mask','className','attrs','content','refreshOnChange',
+    'allowMultipleMasks', 'showWordCount', 'showCharCount', 'spellcheck', 'mask','className','attrs','refreshOnChange',
     'editor','autoExpand','labelWidth','labelMargin','shortcut','inputType','widget','uniqueOptions'];
 
   constructor() { }
