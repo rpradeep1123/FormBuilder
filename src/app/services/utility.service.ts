@@ -6,50 +6,50 @@ import { Injectable } from '@angular/core';
 export class UtilityService {
 
   editFormOptions: Object = {};
-
   editControlsEnableTabs: string[] = ['display'];
   editControlsHiddenTabs: string[] = ['api', 'conditional', 'logic', 'layout', 'data', 'validation'];
   editControlsHiddenItems: string[] = ['description', 'tooltip', 'customClass', 'tabindex', 'inline', 'hidden',
     'hideLabel', 'autofocus', 'disabled', 'tableView', 'modalEdit', 'prefix', 'suffix', 'widget.type', 'inputMask',
-    'allowMultipleMasks', 'showWordCount', 'showCharCount', 'spellcheck', 'mask','className','attrs','refreshOnChange',
-    'editor','autoExpand','labelWidth','labelMargin','shortcut','inputType','widget','uniqueOptions'];
+    'allowMultipleMasks', 'showWordCount', 'showCharCount', 'spellcheck', 'mask', 'className', 'attrs', 'refreshOnChange',
+    'editor', 'autoExpand', 'labelWidth', 'labelMargin', 'shortcut', 'inputType', 'widget', 'uniqueOptions'];
 
   constructor() { }
 
   getOptions(): Object {
     return this.editFormOptions = {
-      builder: {
-        basic: false,
-        advanced: false,
-        data: false,
-        premium: false,
-        layout: false,
-        customBasic: {
-          title: 'Basic Components',
-          default: true,
-          weight: 0,
-          components: {
-            textfield: true,
-            textarea: true,
-            radio: true,
-            checkbox: true,
-            select: true,
-            phoneNumber: true,
-            columns: true,
-            htmlelement: true
-          }
-        }
-      },
-      editForm: {
-        textfield: [...this.disableTabs(), ...this.enableTabs()],
-        htmlelement: [...this.disableTabs(), ...this.enableTabs()],
-        columns: [...this.disableTabs(), ...this.enableTabs()],
-        textarea: [...this.disableTabs(), ...this.enableTabs()],
-        phoneNumber: [...this.disableTabs(), ...this.enableTabs()],
-        radio: [...this.disableTabs(), ...this.enableTabs()],
-        checkbox: [...this.disableTabs(), ...this.enableTabs()],
-        select: [...this.disableTabs(), ...this.enableTabs()]
-      }
+      noDefaultSubmitButton:true,
+      // builder: {
+      //   basic: false,
+      //   advanced: false,
+      //   data: false,
+      //   premium: false,
+      //   layout: false,
+      //   customBasic: {
+      //     title: 'Basic Components',
+      //     default: true,
+      //     weight: 0,
+      //     components: {
+      //       textfield: true,
+      //       textarea: true,
+      //       radio: true,
+      //       checkbox: true,
+      //       select: true,
+      //       phoneNumber: true,
+      //       columns: true,
+      //       htmlelement: true
+      //     }
+      //   }
+      // },
+      // editForm: {
+      //   textfield: [...this.disableTabs(), ...this.enableTabs()],
+      //   htmlelement: [...this.disableTabs(), ...this.enableTabs()],
+      //   columns: [...this.disableTabs(), ...this.enableTabs()],
+      //   textarea: [...this.disableTabs(), ...this.enableTabs()],
+      //   phoneNumber: [...this.disableTabs(), ...this.enableTabs()],
+      //   radio: [...this.disableTabs(), ...this.enableTabs()],
+      //   checkbox: [...this.disableTabs(), ...this.enableTabs()],
+      //   select: [...this.disableTabs(), ...this.enableTabs()]
+      // }
     }
   }
 

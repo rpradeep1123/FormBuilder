@@ -1,10 +1,14 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, EventEmitter } from '@angular/core';
 import { config, defaultI18n, defaultOptions } from "./formbuilder/config";
 import { FormBuilderCreateor } from "./formbuilder/form-builder";
 import I18N from "./formbuilder/mi18n";
 import { UtilityService } from './services/utility.service';
+import { FormService } from './services/form.service';
+import { saveAs } from 'file-saver';
+var FileSaver = require('file-saver');
 
 declare var jQuery;
+declare var require: any
 
 function initJq() {
   (function ($) {
@@ -49,6 +53,7 @@ function initJq() {
     };
   })(jQuery);
 }
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -56,18 +61,38 @@ function initJq() {
 })
 export class AppComponent implements OnInit {
   title = 'FormBuilder';
-  @ViewChild('json') jsonElement?: ElementRef;
+  formName: string;
   public form: Object = {
     components: []
   };
   public options: Object;
   formBuilder: any;
-  constructor(private utility: UtilityService) {
+  triggerRefresh = new EventEmitter();
+  constructor(private utility: UtilityService, private formService: FormService, private elementRef: ElementRef) {
     this.options = utility.getOptions();
   }
   ngOnInit(): void {
     initJq();
     this.formBuilder = (<any>jQuery('.build-wrap')).formBuilder();
+  }
+
+  saveForm() {
+    this.triggerRefresh.emit({
+      form: this.form
+    });
+    if (this.formName != undefined && this.formName.trim() != '') {
+      const dom: HTMLElement = this.elementRef.nativeElement;
+      const elements = dom.querySelectorAll('.formio-component.formio-component-form.formio-component-label-hidden');
+      var blob = new Blob([elements[0].innerHTML], { type: "text/plain;charset=utf-8" });
+      FileSaver.saveAs(blob, this.formName + ".html");
+      console.log(this.form);
+    }
+  }
+
+  clearForm() {
+    this.form = {
+      components: []
+    }
   }
 
 }
