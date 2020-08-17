@@ -3,10 +3,10 @@
         <div class="col-12">
             <form-builder [form]="form" [options]="options" (change)="refreshData()"></form-builder>
         </div>
-        <div class="col-4 d-flex justify-content-around">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4 d-flex justify-content-around">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#saveModal"><i
-                    class="fa fa-floppy-o" aria-hidden="true"></i> Save Form</button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal"><i
+                    class="fa fa-floppy-o" aria-hidden="true"></i> {{saveText}} Form</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" *ngIf="!isEdit"><i
                     class="fa fa-trash" aria-hidden="true"></i> Clear Form</button>
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formsModel"
                 (click)="getFormList()"><i class="fa fa-files-o" aria-hidden="true"></i> Get Existing Forms</button>
@@ -20,7 +20,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Save Form</h5>
+                <h5 class="modal-title">{{saveText}} Form</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -37,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <img src="assets/images/loader.gif" *ngIf="showLoader">
-                <button type="button" class="btn btn-primary" (click)="saveForm()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="saveForm()">{{saveText}}</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

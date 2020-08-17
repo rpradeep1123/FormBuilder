@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
   currentGuid: string;
   formList: GetFormListResponse[] = [];
   isEdit: boolean = false;
+  saveText = 'Save';
   constructor(private utility: UtilityService, private formService: FormService, private elementRef: ElementRef) {
     this.options = utility.getOptions();
   }
@@ -46,15 +47,18 @@ export class AppComponent implements OnInit {
   saveForm() {
     this.showLoader = true;
     if (this.formName != undefined && this.formName.trim() != '') {
+      let saveType = this.saveText == 'Save' ? 'NEW' : this.currentGuid;
       const dom: HTMLElement = this.elementRef.nativeElement;
       const elements = dom.querySelectorAll('.formio-component.formio-component-form.formio-component-label-hidden');
       let actualHtml = this.createHtml(elements[0].innerHTML);
-      this.formService.saveForm(this.createRequest('NEW')).subscribe(res => {
+      this.formService.saveForm(this.createRequest(saveType)).subscribe(res => {
         this.saveResponse = res.info;
         if (this.saveResponse.res == '0') {
           $('#saveModal').modal('hide');
           this.downloadFile(actualHtml);
           this.clearForm();
+        } else {
+          this.showLoader = false;
         }
       })
     }
@@ -135,6 +139,7 @@ export class AppComponent implements OnInit {
     this.formName = formName;
     this.form = JSON.parse(formJson);
     this.isEdit = true;
+    this.saveText = 'Update';
   }
   cloneForm(formJson) {
     this.form = JSON.parse(formJson);
