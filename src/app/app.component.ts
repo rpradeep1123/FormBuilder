@@ -5,7 +5,7 @@ import I18N from "./formbuilder/mi18n";
 import { UtilityService } from './services/utility.service';
 import { FormService } from './services/form.service';
 import { saveAs } from 'file-saver';
-import { FormControlModel, Control, FormSaveResponse } from './models/form-control.model';
+import { FormControlModel, Control, FormSaveResponse, GetFormListResponse } from './models/form-control.model';
 var FileSaver = require('file-saver');
 
 declare var $;
@@ -22,6 +22,9 @@ export class AppComponent implements OnInit {
   public form: Object = {
     components: []
   };
+  public preForm: Object = {
+    components: []
+  };
   public options: Object;
   formBuilder: any;
   triggerRefresh = new EventEmitter();
@@ -31,11 +34,13 @@ export class AppComponent implements OnInit {
     res: '0',
     status: '0'
   };
+  currentGuid: string;
+  formList: GetFormListResponse[] = [];
+  isEdit: boolean = false;
   constructor(private utility: UtilityService, private formService: FormService, private elementRef: ElementRef) {
     this.options = utility.getOptions();
   }
   ngOnInit(): void {
-
   }
 
   saveForm() {
@@ -44,9 +49,8 @@ export class AppComponent implements OnInit {
       const dom: HTMLElement = this.elementRef.nativeElement;
       const elements = dom.querySelectorAll('.formio-component.formio-component-form.formio-component-label-hidden');
       let actualHtml = this.createHtml(elements[0].innerHTML);
-      this.formService.saveForm(this.createRequest()).subscribe(res => {
+      this.formService.saveForm(this.createRequest('NEW')).subscribe(res => {
         this.saveResponse = res.info;
-        this.showLoader = false;
         if (this.saveResponse.res == '0') {
           $('#saveModal').modal('hide');
           this.downloadFile(actualHtml);
@@ -70,6 +74,7 @@ export class AppComponent implements OnInit {
   downloadFile(htmlResponse) {
     var blob = new Blob([htmlResponse], { type: "text/plain;charset=utf-8" });
     FileSaver.saveAs(blob, this.formName + ".html");
+    this.showLoader = false;
   }
   createHtml(formHtml) {
     let actualHtml = `<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></head><body>`;
@@ -79,13 +84,14 @@ export class AppComponent implements OnInit {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script></body></html>`
     return actualHtml;
   }
-  createRequest(): FormControlModel {
+  createRequest(guid: string): FormControlModel {
     let request: FormControlModel = {
+      guid: guid,
+      formJson: JSON.stringify(this.form),
       formId: this.formName,
       formName: this.formName,
       formControls: []
     };
-    console.log(this.form);
     if (this.form["components"].length > 0) {
       this.form["components"].forEach(element => {
         if (element.type == 'columns') {
@@ -108,6 +114,33 @@ export class AppComponent implements OnInit {
       controlValue: ''
     }
     return control;
+  }
+
+  getFormList() {
+    this.formService.getFormList().subscribe(res => {
+      this.formList = JSON.parse(res.info.res);
+    })
+  }
+  updateForm() {
+    this.formService.updateForm(this.createRequest(this.currentGuid)).subscribe(res => {
+      console.log(res);
+    })
+    this.formService.getFormList().subscribe(res => {
+      this.formList = JSON.parse(res.data);
+    })
+  }
+
+  editForm(guid, formName, formJson) {
+    this.currentGuid = guid;
+    this.formName = formName;
+    this.form = JSON.parse(formJson);
+    this.isEdit = true;
+  }
+  cloneForm(formJson) {
+    this.form = JSON.parse(formJson);
+  }
+  previewForm(formJson) {
+    this.preForm = JSON.parse(formJson);
   }
 
 }

@@ -17,6 +17,16 @@ export class FormService {
       catchError((error: HttpErrorResponse) => this.handleError(error))
     )
   }
+  updateForm(request: FormControlModel) {
+    return this.http.post<any>(environment.apiURL + '/FormUpdateRequest', request).pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error))
+    )
+  }
+  getFormList() {
+    return this.http.post<any>(environment.apiURL + '/FormListRequest','').pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error))
+    )
+  }
   handleError(error) {
     return throwError(error);
   }
