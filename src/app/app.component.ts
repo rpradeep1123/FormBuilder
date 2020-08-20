@@ -51,16 +51,30 @@ export class AppComponent implements OnInit {
       const dom: HTMLElement = this.elementRef.nativeElement;
       const elements = dom.querySelectorAll('.formio-component.formio-component-form.formio-component-label-hidden');
       let actualHtml = this.createHtml(elements[0].innerHTML);
-      this.formService.saveForm(this.createRequest(saveType)).subscribe(res => {
-        this.saveResponse = res.info;
-        if (this.saveResponse.res == '0') {
-          $('#saveModal').modal('hide');
-          this.downloadFile(actualHtml);
-          this.clearForm();
-        } else {
-          this.showLoader = false;
-        }
-      })
+      if (saveType == 'NEW')
+        this.formService.saveForm(this.createRequest(saveType)).subscribe(res => {
+          this.saveResponse = res.info;
+          if (this.saveResponse.res == '0') {
+            $('#saveModal').modal('hide');
+            this.downloadFile(actualHtml);
+            this.clearForm();
+          } else {
+            this.showLoader = false;
+          }
+        });
+      else
+        this.formService.updateForm(this.createRequest(saveType)).subscribe(res => {
+          this.saveText = "Save";
+          this.isEdit = false;
+          this.saveResponse = res.info;
+          if (this.saveResponse.res == '0') {
+            $('#saveModal').modal('hide');
+            this.downloadFile(actualHtml);
+            this.clearForm();
+          } else {
+            this.showLoader = false;
+          }
+        })
     }
   }
   refreshData() {
@@ -81,11 +95,20 @@ export class AppComponent implements OnInit {
     this.showLoader = false;
   }
   createHtml(formHtml) {
-    let actualHtml = `<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></head><body>`;
+    let actualHtml = `<html><head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+/><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
+<script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
+    </head><body class="container-fluid">`;
     actualHtml += formHtml;
-    actualHtml += `<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script></body></html>`
+    actualHtml += `
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    
+    </body></html>`
     return actualHtml;
   }
   createRequest(guid: string): FormControlModel {
@@ -123,14 +146,6 @@ export class AppComponent implements OnInit {
   getFormList() {
     this.formService.getFormList().subscribe(res => {
       this.formList = JSON.parse(res.info.res);
-    })
-  }
-  updateForm() {
-    this.formService.updateForm(this.createRequest(this.currentGuid)).subscribe(res => {
-      console.log(res);
-    })
-    this.formService.getFormList().subscribe(res => {
-      this.formList = JSON.parse(res.data);
     })
   }
 
