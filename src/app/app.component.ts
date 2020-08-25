@@ -5,6 +5,8 @@ import I18N from "./formbuilder/mi18n";
 import { UtilityService } from './services/utility.service';
 import { FormService } from './services/form.service';
 import { saveAs } from 'file-saver';
+import { Formio } from 'formiojs';
+import AccordionComponent from './components/accordian/accordian';
 import { FormControlModel, Control, FormSaveResponse, GetFormListResponse } from './models/form-control.model';
 var FileSaver = require('file-saver');
 
@@ -40,6 +42,8 @@ export class AppComponent implements OnInit {
   saveText = 'Save';
   constructor(private utility: UtilityService, private formService: FormService, private elementRef: ElementRef) {
     this.options = utility.getOptions();
+    Formio.registerComponent('accordion', AccordionComponent);
+    //Components.setComponent('accordion', AccordionComponent);
   }
   ngOnInit(): void {
   }
@@ -49,7 +53,7 @@ export class AppComponent implements OnInit {
     if (this.formName != undefined && this.formName.trim() != '') {
       let saveType = this.saveText == 'Save' ? 'NEW' : this.currentGuid;
       const dom: HTMLElement = this.elementRef.nativeElement;
-      const elements = dom.querySelectorAll('.formio-component.formio-component-form.formio-component-label-hidden');
+      const elements = dom.querySelectorAll('#preview-pane .formio-form');
       let actualHtml = this.createHtml(elements[0].innerHTML);
       if (saveType == 'NEW')
         this.formService.saveForm(this.createRequest(saveType)).subscribe(res => {
@@ -97,12 +101,10 @@ export class AppComponent implements OnInit {
   createHtml(formHtml) {
     let actualHtml = `<html><head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
-/><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
-<script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
+    <script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
     </head><body class="container-fluid">`;
     actualHtml += formHtml;
     actualHtml += `

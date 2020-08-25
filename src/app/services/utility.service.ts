@@ -18,28 +18,15 @@ export class UtilityService {
   getOptions(): Object {
     return this.editFormOptions = {
       noDefaultSubmitButton:true,
-      // builder: {
-      //   basic: false,
-      //   advanced: false,
-      //   data: false,
-      //   premium: false,
-      //   layout: false,
-      //   customBasic: {
-      //     title: 'Basic Components',
-      //     default: true,
-      //     weight: 0,
-      //     components: {
-      //       textfield: true,
-      //       textarea: true,
-      //       radio: true,
-      //       checkbox: true,
-      //       select: true,
-      //       phoneNumber: true,
-      //       columns: true,
-      //       htmlelement: true
-      //     }
-      //   }
-      // },
+      builder: {
+        customBasic: {
+          title: 'Custom Components',
+          weight: 0,
+          components: {
+            accordion: true
+          }
+        }
+      },
       // editForm: {
       //   textfield: [...this.disableTabs(), ...this.enableTabs()],
       //   htmlelement: [...this.disableTabs(), ...this.enableTabs()],
