@@ -441,6 +441,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 formiojs
 MIT
 
+glyphicons-only-bootstrap
+MIT
+
 i18next
 MIT
 The MIT License (MIT)

@@ -7,22 +7,26 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
         cursor: pointer;
     }
 }
-.formsModal .modal-dialog,.previewModal .modal-dialog {
+.formsModal .modal-dialog,
+.previewModal .modal-dialog {
     max-width: 75vw;
     max-height: 75vh;
 }
 .modal-content {
     height: 100%;
 }
-#previewModel{
-    .modal-body{
-        overflow-y:auto;
-        max-height:75vh;
+#previewModel {
+    .modal-body {
+        overflow-y: auto;
+        max-height: 75vh;
     }
 }
-#formsModel{
-    .modal-body{
-        overflow-y:auto;
-        max-height:75vh;
+#formsModel {
+    .modal-body {
+        overflow-y: auto;
+        max-height: 75vh;
     }
+}
+.formio-dialog.formio-dialog-theme-default .formio-dialog-close:before {
+    content: "\D7" !important;
 }
