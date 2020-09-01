@@ -104,12 +104,24 @@ export class AppComponent implements OnInit {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
     </head><body class="container-fluid">`;
     actualHtml += formHtml;
     actualHtml += `
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-    
+    <script>
+	$(document).ready(function(){
+		$(".formio-component-accordion .card .card-header").click((e)=>{
+		$(".formio-component-accordion .card .card-header").removeClass('active');
+		$(e.currentTarget).addClass('active');
+		$(".formio-component-accordion .card .card-body").css('display','none');
+			$($(e.currentTarget.parentElement).find('.card-body')[0]).css('display','block');
+		})
+	})
+  </script>  
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>    
     </body></html>`
     return actualHtml;
   }
